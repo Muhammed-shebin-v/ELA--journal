@@ -3,7 +3,6 @@ import 'package:new_ela/model/user/user.dart';
 import 'package:new_ela/view/intro.dart';
 import 'package:new_ela/view/widget/notchbar.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

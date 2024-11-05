@@ -1,3 +1,4 @@
+import 'package:new_ela/view/theme/app_color.dart';
 import 'package:new_ela/view/theme/app_textstyle.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -23,7 +24,7 @@ class CustomTitle extends StatelessWidget {
               height: 26,
               width: length,
               decoration: BoxDecoration(
-                  color: const Color.fromRGBO(245, 255, 210, 1),
+                  color: ElaColors.lightgreen,
                   borderRadius: BorderRadius.circular(5)),
             ),
           ),

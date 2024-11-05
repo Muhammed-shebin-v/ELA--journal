@@ -106,7 +106,6 @@ class _MyWidgetState extends State<HomeScreeen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

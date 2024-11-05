@@ -34,7 +34,7 @@ class _UserDetailsState extends State<UserDetails> {
   late Map<DateTime, String> moodDatabase;
   List<MoodModel> weeklyMoodData = [];
   late Box<MoodModel> moodBox;
-// -- - - - - - -- - - - - -- - -- -- -- - - 
+// -- - - - - - -- - - - - -- - -- -- -- - -
   List<WaterModel> weeklyWaterData = [];
   final WaterIntakeService _waterService = WaterIntakeService();
 // - - - -   - -  -   - - -  -  - - - -- ---
@@ -73,7 +73,8 @@ class _UserDetailsState extends State<UserDetails> {
     loadWeeklyMoodData();
   }
 
-  String formatDate(DateTime date) =>'${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
+  String formatDate(DateTime date) =>
+      '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
   void loadWeeklyMoodData() {
     final weekData = <MoodModel>[];
     for (int i = 0; i < 7; i++) {
@@ -97,6 +98,7 @@ class _UserDetailsState extends State<UserDetails> {
       weeklyWaterData = data;
     });
   }
+
 // walk data  - - - - - - - - - - - - - - - - - - -
   Future<void> loadWalkData() async {
     List<WalkModel> walk = await _walkService.getWeeklyWalk();
@@ -104,6 +106,7 @@ class _UserDetailsState extends State<UserDetails> {
       weeklyWalkData = walk;
     });
   }
+
 // read data  - - - - - - - - - - - - - - - - - - -
   Future<void> loadReadData() async {
     List<ReadModel> read = await _readService.getWeeklyRead();
@@ -111,6 +114,7 @@ class _UserDetailsState extends State<UserDetails> {
       weeklyReadData = read;
     });
   }
+
 // sleep data  - - - - - - - - - - - - - - - - - - -
   Future<void> loadSleepData() async {
     List<SleepModel> sleep = await _sleepService.getWeeklySleep();
@@ -123,14 +127,15 @@ class _UserDetailsState extends State<UserDetails> {
   Widget build(BuildContext context) {
     List<Widget> graphList = [
       CustomGraph(
-          weeklyData: weeklyWaterData,
-          modelType: 'water',
-          errorMessage: 'error found',
-          title: 'water',
-          intervels: 500,
-          maximumvalue: 4000,
-          unit: 'mL',
-          titleLength: 150,),
+        weeklyData: weeklyWaterData,
+        modelType: 'water',
+        errorMessage: 'error found',
+        title: 'water',
+        intervels: 500,
+        maximumvalue: 4000,
+        unit: 'mL',
+        titleLength: 200,
+      ),
       CustomGraph(
           weeklyData: weeklyWalkData,
           modelType: 'walk',
@@ -139,7 +144,7 @@ class _UserDetailsState extends State<UserDetails> {
           intervels: 1000,
           maximumvalue: 10000,
           unit: 'step',
-          titleLength: 150),
+          titleLength: 200),
       CustomGraph(
           weeklyData: weeklyReadData,
           modelType: 'read',
@@ -148,7 +153,7 @@ class _UserDetailsState extends State<UserDetails> {
           intervels: 5,
           maximumvalue: 40,
           unit: 'page',
-          titleLength: 150),
+          titleLength: 200),
       CustomGraph(
           weeklyData: weeklySleepData,
           modelType: 'sleep',
@@ -157,148 +162,146 @@ class _UserDetailsState extends State<UserDetails> {
           intervels: 1,
           maximumvalue: 8,
           unit: 'Hr',
-          titleLength: 150),
+          titleLength: 200),
     ];
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          automaticallyImplyLeading: false,
-          title: Align(
-            alignment: Alignment.topLeft,
-            child: Stack(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: Container(
-                    height: 35,
-                    width: 85,
-                    decoration: BoxDecoration(
-                        color: const Color.fromRGBO(245, 255, 210, 1),
-                        borderRadius: BorderRadius.circular(5)),
-                  ),
-                ),
-                Text('ELA', style: GoogleFonts.kalnia(fontSize: 40))
-              ],
-            ),
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 20.0, top: 10),
-              child: Builder(builder: (context) {
-                return InkWell(
-                  onTap: () {
-                    Scaffold.of(context).openDrawer();
-                  },
-                  child: const Image(
+        body: SafeArea(
+          child: SingleChildScrollView(
+              child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                           Padding(
+                padding: const EdgeInsets.only(right: 20.0, top: 10),
+                child: Builder(builder: (context) {
+                  return InkWell(
+                    onTap: () {
+                      Scaffold.of(context).openDrawer();
+                    },
+                    child: const Image(
+                        height: 35,
+                        width: 35,
+                        image: AssetImage('assets/icons/setting-lines.png')),
+                  );
+                }),
+              ),
+              Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Container(
                       height: 35,
-                      width: 35,
-                      image: AssetImage('assets/icons/setting-lines.png')),
-                );
-              }),
-            )
-          ],
-        ),
-        body: SingleChildScrollView(
-            child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(children: [
-                  CustomContainer(
-                   color: ElaColors.lightgreen,
-                   boxshadow: true,
-                    height: 200,
-                    child: Row(children: [
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 15),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(width: 1.5),
-                              borderRadius: BorderRadius.circular(80),
+                      width: 85,
+                      decoration: BoxDecoration(
+                          color: const Color.fromRGBO(245, 255, 210, 1),
+                          borderRadius: BorderRadius.circular(5)),
+                    ),
+                  ),
+                  Text('ELA', style: GoogleFonts.kalnia(fontSize: 40))
+                ],
+              ),
+          
+                        ],
+                      ),
+                    CustomContainer(
+                      color: ElaColors.lightgreen,
+                      boxshadow: true,
+                      height: 200,
+                      child: Row(children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(width: 1.5),
+                                borderRadius: BorderRadius.circular(80),
+                              ),
+                              height: 140,
+                              width: 140,
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(100),
+                                  child: _user?.image == null
+                                      ? const Image(
+                                          fit: BoxFit.fill,
+                                          image: AssetImage(
+                                              'assets/images/IMG_7399.JPG'))
+                                      : Image.memory(
+                                          _user!.image!,
+                                          fit: BoxFit.fill,
+                                        )),
                             ),
-                            height: 140,
-                            width: 140,
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.circular(100),
-                                child: _user?.image == null
-                                    ? const Image(
-                                        fit: BoxFit.fill,
-                                        image: AssetImage(
-                                            'assets/images/IMG_7399.JPG'))
-                                    : Image.memory(
-                                        _user!.image!,
-                                        fit: BoxFit.fill,
-                                      )),
                           ),
                         ),
-                      ),
-                      const Gap(10),
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('Name : ${ _user?.name ?? 'Not Available'}',
-                            style: ElaTextStyle.subTitle,
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text('Address : ${_user?.address ?? 'Not Available'}',
-                            style: ElaTextStyle.subTitle,
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text('DOB : ${_user?.dob ?? 'Not Available'}'
-                            ,
-                            style: ElaTextStyle.subTitle,
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text('Phone : ${_user?.phone.toString() ?? 'Not Available'}'
-                            ,
-                            style: ElaTextStyle.subTitle,
-                          )
-                        ],
-                      )
-                    ]),
-                  ),
-                  const Gap(30),
-                        CustomGraph(
-                            weeklyData: weeklyMoodData,
-                            modelType: 'mood',
-                            errorMessage: 'error',
-                            title: 'mood',
-                            intervels: 1,
-                            maximumvalue: 6),
-                      
-                    
-                  
-                  Gap(30),
-                  CarouselSlider(
-                    options: CarouselOptions(
-                      height: 450,
-                      autoPlay: true,
-                      enlargeCenterPage: true,
-                      aspectRatio: 16 / 9,
-                      viewportFraction: 0.8,
+                        const Gap(10),
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Name : ${_user?.name ?? 'Not Available'}',
+                              style: ElaTextStyle.subTitle,
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              'Address : ${_user?.address ?? 'Not Available'}',
+                              style: ElaTextStyle.subTitle,
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              'DOB : ${_user?.dob ?? 'Not Available'}',
+                              style: ElaTextStyle.subTitle,
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              'Phone : ${_user?.phone.toString() ?? 'Not Available'}',
+                              style: ElaTextStyle.subTitle,
+                            )
+                          ],
+                        )
+                      ]),
                     ),
-                    items: graphList.map((graph) {
-                      return Builder(
-                        builder: (BuildContext context) {
-                          return graph;
-                        },
-                      );
-                    }).toList(),
-                  ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-
-         ]))),
+                    const Gap(30),
+                    CustomGraph(
+                        weeklyData: weeklyMoodData,
+                        modelType: 'mood',
+                        errorMessage: 'error',
+                        title: 'mood',
+                        intervels: 1,
+                        maximumvalue: 6),
+                    const Gap(30),
+                    CarouselSlider(
+                      options: CarouselOptions(
+                        height: 450,
+                        autoPlay: true,
+                        enlargeCenterPage: true,
+                        aspectRatio: 16 / 9,
+                        viewportFraction: 0.8,
+                      ),
+                      items: graphList.map((graph) {
+                        return Builder(
+                          builder: (BuildContext context) {
+                            return graph;
+                          },
+                        );
+                      }).toList(),
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                  ]))),
+        ),
         drawer: CustomDrawer(context: context));
   }
 }

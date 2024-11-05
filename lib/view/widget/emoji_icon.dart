@@ -1,5 +1,6 @@
 import 'package:new_ela/controllers/mood_function.dart';
 import 'package:new_ela/model/mood/mood_model.dart';
+import 'package:new_ela/view/theme/app_color.dart';
 import 'package:new_ela/view/widget/snackbar.dart';
 import 'package:flutter/material.dart';
 
@@ -36,6 +37,6 @@ class CustomEmojiIcon extends StatelessWidget {
   Future<void>_save({required mood}) async{
     MoodModel savingmood=MoodModel(date: _currentdate, mood: mood);
     await saveMood(mood:savingmood);
-    customSnackBar(ctx: ctx, text: 'Mood $mood saved!!');
+    customSnackBar(ctx: ctx, text: 'Mood $mood saved!!',color: ElaColors.green);
   }
 }

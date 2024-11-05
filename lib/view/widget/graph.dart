@@ -34,30 +34,20 @@ class CustomGraph extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return
-        // CustomContainer(
-        //   width: double.infinity,
-        //     boxshadow: true,
-        //     color: ElaColors.lightgrey,
-        //     child: Column(children: [
-        //       const Padding(
-        //         padding: EdgeInsets.only(left: 15.0, top: 10),
-        //         child: CustomTitle(heading: 'Weekly Mood', length: 144),
-        //       ),
-   
         Column(
           children: [
             modelType!='mood'?
             CustomTitle(heading: 'Weekly $title ($unit)', length: titleLength!)
-            :SizedBox(),
-            Gap(2),
+            :const SizedBox(),
+            const Gap(2),
             CustomContainer(
               boxshadow: true,
               child: Column(
                 children: [
                   modelType=='mood'?
-                  Padding(
-                    padding: const EdgeInsets.only(top: 1.0, left: 10),
-                    child: CustomTitle(heading: 'Weekly $title', length: 145),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 15.0, left: 15),
+                    child: CustomTitle(heading: 'Weekly Mood', length: 145),
                   ):const SizedBox(),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -66,10 +56,8 @@ class CustomGraph extends StatelessWidget {
                         : SfCartesianChart(
                             plotAreaBackgroundColor: ElaColors.lightgrey,
                             primaryXAxis: const CategoryAxis(
-                                // title: AxisTitle(text: 'Day'),
                                 ),
                             primaryYAxis: NumericAxis(
-                              // title: AxisTitle(text:title ),
                               minimum: 0,
                               maximum: maximumvalue,
                               interval: intervels,
@@ -135,7 +123,6 @@ class CustomGraph extends StatelessWidget {
                                   borderWidth: 0.4,
                                 ),
                             ],
-                            // title: const ChartTitle(text: 'Mood Over the Past Week'),
                           ),
                   ),
                 ],
@@ -143,9 +130,6 @@ class CustomGraph extends StatelessWidget {
             ),
           ],
         );
-    
-        // ]))
-        
   }
 
   dynamic colorSelector(String mood) {

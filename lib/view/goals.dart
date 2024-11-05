@@ -4,6 +4,7 @@ import 'package:new_ela/controllers/sleep_goal.dart';
 import 'package:new_ela/controllers/walk.dart';
 import 'package:new_ela/controllers/water_goal_function.dart';
 import 'package:new_ela/view/theme/app_color.dart';
+import 'package:new_ela/view/widget/snackbar.dart';
 import 'widget/dialygoals.dart';
 import 'widget/heading.dart';
 import 'package:flutter/material.dart';
@@ -126,9 +127,10 @@ class _GoalsState extends State<Goals> {
       await readPageService.increasePage(5.0);
       loadCurrentPage();
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("You've reached your daily goal!")),
-      );
+      customSnackBar(
+          ctx: context,
+          text: "You've reached your daily goal!",
+          color: ElaColors.red);
     }
   }
 
@@ -137,9 +139,10 @@ class _GoalsState extends State<Goals> {
       await readPageService.decreasePage(5.0);
       loadCurrentPage();
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Intake cannot go below zero.")),
-      );
+      customSnackBar(
+          ctx: context,
+          text: "Intake cannot go below zero.",
+          color: ElaColors.red);
     }
   }
 
@@ -156,9 +159,10 @@ class _GoalsState extends State<Goals> {
       await sleepService.increaseSleep(1.0);
       loadCurrentSleep();
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("You've reached your daily goal!")),
-      );
+      customSnackBar(
+          ctx: context,
+          text: "You've reached your daily goal!",
+          color: ElaColors.red);
     }
   }
 
@@ -167,9 +171,10 @@ class _GoalsState extends State<Goals> {
       await sleepService.decreaseSleep(1.0);
       loadCurrentSleep();
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Intake cannot go below zero.")),
-      );
+      customSnackBar(
+          ctx: context,
+          text: "Intake cannot go below zero.",
+          color: ElaColors.red);
     }
   }
 
@@ -186,9 +191,10 @@ class _GoalsState extends State<Goals> {
       await walkService.increaseCount(1000.0);
       loadCurrentCount();
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("You've reached your daily goal!")),
-      );
+      customSnackBar(
+          ctx: context,
+          text: "You've reached your daily goal!",
+          color: ElaColors.red);
     }
   }
 
@@ -197,9 +203,10 @@ class _GoalsState extends State<Goals> {
       await walkService.decreaseCount(1000.0);
       loadCurrentCount();
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Intake cannot go below zero.")),
-      );
+      customSnackBar(
+          ctx: context,
+          text: "Intake cannot go below zero.",
+          color: ElaColors.red);
     }
   }
 
@@ -216,9 +223,10 @@ class _GoalsState extends State<Goals> {
       await waterService.increaseIntake(500.0);
       loadCurrentIntake();
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("You've reached your daily goal!")),
-      );
+      customSnackBar(
+          ctx: context,
+          text: "You've reached your daily goal!",
+          color: ElaColors.red);
     }
   }
 
@@ -227,9 +235,10 @@ class _GoalsState extends State<Goals> {
       await waterService.decreaseIntake(500.0);
       loadCurrentIntake();
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Intake cannot go below zero.")),
-      );
+      customSnackBar(
+          ctx: context,
+          text: "Intake cannot go below zero.",
+          color: ElaColors.red);
     }
   }
 }

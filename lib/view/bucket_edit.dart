@@ -1,7 +1,5 @@
 import 'dart:developer';
 import 'dart:typed_data';
-
-import 'package:analyzer/dart/ast/ast.dart';
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:bottom_picker/resources/arrays.dart';
 import 'package:new_ela/controllers/bucket_function.dart';
@@ -104,7 +102,7 @@ final List<String> _displayTexts = [
                     child: Form(
                       child: Column(
                         children: [
-                         Gap(40),
+                         const Gap(40),
                          Row(
                             children: [
                               const Text('Title:',style: ElaTextStyle.formTitle,),
@@ -291,46 +289,6 @@ final List<String> _displayTexts = [
         ),
       ),
     );
-  }
-
-  void deleteimage() {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-              title: const Text('Delete Image'),
-              content: const Text('Do you want to delete image?'),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text(
-                      'cancel',
-                      style: TextStyle(color: Colors.black),
-                    )),
-                TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child:
-                        const Text('Delete', style: TextStyle(color: Colors.black)))
-              ],
-              backgroundColor: const Color.fromRGBO(245, 255, 210, 1),
-            ));
-  }
-    void pickDate() {
-    BottomPicker.date(
-      pickerTitle: const Text(
-        'Final Date',
-      ),
-      onSubmit: (date) {
-        setState(() {
-          _finalDate = date;
-        });
-      },
-      initialDateTime: DateTime.now(), 
-      maxDateTime: DateTime.now(), 
-    ).show(context);
   }
     void _pickDate() {
     BottomPicker.date(

@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:bottom_picker/resources/arrays.dart';
 import 'package:new_ela/controllers/bucket_function.dart';
-import 'package:new_ela/controllers/user_functions.dart';
 import 'package:new_ela/model/bucket/bucket_model.dart';
 import 'package:new_ela/view/theme/app_color.dart';
 import 'package:new_ela/view/theme/app_textstyle.dart';
@@ -151,7 +150,7 @@ class _BucketViewState extends State<BucketView> {
                               ),
                             ],
                           ),
-                          Gap(20),
+                          const Gap(20),
                           TextFormField(
                             style: ElaTextStyle.title,
                             controller: _contentController,

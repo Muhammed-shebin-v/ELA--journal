@@ -12,4 +12,5 @@ class ElaColors {
   static const Color emojicolor4 = Color.fromRGBO(223, 255, 139, 1);
   static const Color emojicolor5 = Color.fromRGBO(243, 255, 211, 1);
   static const Color emojicolor6 = Color.fromRGBO(255, 255, 255, 1);
+  static const Color red=Colors.red;
 }

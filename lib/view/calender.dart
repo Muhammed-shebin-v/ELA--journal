@@ -4,6 +4,7 @@ import 'package:new_ela/view/theme/app_color.dart';
 import 'package:new_ela/view/theme/app_textstyle.dart';
 import 'package:new_ela/view/widget/snackbar.dart';
 import 'package:intl/intl.dart';
+import 'package:new_ela/view/widget/title.dart';
 import 'diary.dart';
 import 'widget/container.dart';
 import 'widget/heading.dart';
@@ -48,11 +49,11 @@ class _MyWidgetState extends State<Calender> {
       backgroundColor: Colors.white,
       body: SafeArea(
           child: SingleChildScrollView(
-            child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Column(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
             children: [
-              Gap(20),
+              const Gap(20),
               const CustomHeading(
                 heading: 'Calender',
                 length: 135,
@@ -68,7 +69,8 @@ class _MyWidgetState extends State<Calender> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 40.0, right: 20),
+                            padding:
+                                const EdgeInsets.only(left: 40.0, right: 20),
                             child: Text(
                               DateFormat('d').format(_selectedDate),
                               style: const TextStyle(
@@ -81,7 +83,8 @@ class _MyWidgetState extends State<Calender> {
                             color: Colors.black,
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 30.0, right: 20),
+                            padding:
+                                const EdgeInsets.only(left: 30.0, right: 20),
                             child: Column(
                               children: [
                                 Text(
@@ -102,7 +105,7 @@ class _MyWidgetState extends State<Calender> {
                           lastDay: DateTime.utc(2030, 3, 14),
                           focusedDay: _selectedDate,
                           selectedDayPredicate: (day) =>
-                          isSameDay(day, _selectedDate),
+                              isSameDay(day, _selectedDate),
                           onDaySelected: _onDaySelected,
                           calendarFormat: CalendarFormat.month,
                           availableCalendarFormats: const {
@@ -118,31 +121,35 @@ class _MyWidgetState extends State<Calender> {
                               color: ElaColors.black,
                             ),
                             todayTextStyle: TextStyle(
-                              color: ElaColors.black, 
+                              color: ElaColors.black,
                             ),
                             todayDecoration: BoxDecoration(
-                              color:ElaColors.lightgreen, 
+                              color: ElaColors.lightgreen,
                               shape: BoxShape.circle,
                             ),
-                            
                           ))
                     ],
                   )),
-              const Gap(20),
+              const Padding(
+                padding: EdgeInsets.only(top: 20, bottom: 10),
+                child: CustomTitle(heading: 'Diary', length: 60),
+              ),
               InkWell(
                 onTap: () {
                   if (_selectedDate.isBefore(DateTime.now())) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Diary(
-                                diary: _diaryEntries,
-                                selecteddate: _selectedDate,
-                              )));
-                }
-                else{
-                  customSnackBar(ctx: context, text: "Sorry,You can’t add a diary for a future date");
-                }
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Diary(
+                                  diary: _diaryEntries,
+                                  selecteddate: _selectedDate,
+                                )));
+                  } else {
+                    customSnackBar(
+                        color: ElaColors.red,
+                        ctx: context,
+                        text: "Sorry,You can't add a diary for a future date");
+                  }
                 },
                 child: CustomContainer(
                   color: ElaColors.lightgreen,
@@ -167,9 +174,9 @@ class _MyWidgetState extends State<Calender> {
               ),
               const Gap(20),
             ],
-                    ),
-                  ),
-          )),
+          ),
+        ),
+      )),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:new_ela/view/theme/app_textstyle.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CustomButton extends StatelessWidget {
   final String text;
   bool? button=false;

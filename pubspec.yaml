@@ -40,8 +40,6 @@ dependencies:
   bottom_picker: ^2.8.0
   carousel_slider: ^5.0.0
   collection: ^1.18.0
-  fl_chart: ^0.69.0
-  flutter_heat_map: ^1.2.1
   font_awesome_flutter: ^10.8.0
   gap: ^3.0.1
   hive: ^2.2.3
