@@ -31,7 +31,7 @@ class _MyWidgetState extends State<HomeScreeen> {
   Quote? currentQuote;
   Timer? _timer;
   List<TodoModel> latestTodos = [];
-    final WaterIntakeService waterService = WaterIntakeService();
+  final WaterIntakeService waterService = WaterIntakeService();
   double currentIntake = 0.0;
   final double dailyGoal = 4000.0;
 
@@ -73,7 +73,7 @@ class _MyWidgetState extends State<HomeScreeen> {
   void loadtodo() async {
     final latestTodosData = await fetchLatestTodos();
     setState(() {
-      latestTodos=latestTodosData;
+      latestTodos = latestTodosData;
     });
   }
 
@@ -128,22 +128,21 @@ class _MyWidgetState extends State<HomeScreeen> {
                         'Hello ${user?.name ?? 'unknown'}, $greet',
                         style: GoogleFonts.kalnia(fontSize: 28),
                       )),
-                      
-                    Stack(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(top: 10.0),
-                                child: Container(
-                                  height: 40,
-                                  width: 85,
-                                  decoration: BoxDecoration(
-                                      color: ElaColors.lightgreen,
-                                      borderRadius: BorderRadius.circular(5)),
-                                ),
-                              ),
-                              Text('ELA', style: GoogleFonts.kalnia(fontSize: 40))
-                            ],
-                          )
+                      Stack(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: Container(
+                              height: 40,
+                              width: 85,
+                              decoration: BoxDecoration(
+                                  color: ElaColors.lightgreen,
+                                  borderRadius: BorderRadius.circular(5)),
+                            ),
+                          ),
+                          Text('ELA', style: GoogleFonts.kalnia(fontSize: 40))
+                        ],
+                      )
                     ],
                   ),
                   const Gap(20),
@@ -180,10 +179,7 @@ class _MyWidgetState extends State<HomeScreeen> {
                   const Gap(15),
                   InkWell(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const TodoList()));
+                        _navigateToTodo(context);
                       },
                       child: CustomContainer(
                           color: ElaColors.white,
@@ -224,25 +220,32 @@ class _MyWidgetState extends State<HomeScreeen> {
                                   })
                               : const Center(
                                   child: Text(
-                                    'oops! add a todo first',
+                                    'Add your TodDos here',
                                     style: ElaTextStyle.subHeading,
                                   ),
                                 ))),
                   const Gap(15),
-                   CustomContainer(
+                  CustomContainer(
                     color: ElaColors.lightgreen,
                     boxshadow: true,
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
                         children: [
-                          CustomHomeLinearIndicator(title: 'Water', value: currentIntake / dailyGoal),
+                          CustomHomeLinearIndicator(
+                              title: 'Water', value: currentIntake / dailyGoal),
                           const Gap(20),
-                          CustomHomeLinearIndicator(title: 'Walk', value:currentCount/dailyGoalwalk),
+                          CustomHomeLinearIndicator(
+                              title: 'Walk',
+                              value: currentCount / dailyGoalwalk),
                           const Gap(20),
-                          CustomHomeLinearIndicator(title: 'Read', value:currentPage/dailyGoalPage),
+                          CustomHomeLinearIndicator(
+                              title: 'Read',
+                              value: currentPage / dailyGoalPage),
                           const Gap(20),
-                          CustomHomeLinearIndicator(title: 'Sleep', value:currentSleep/dailyGoalSleep) ,
+                          CustomHomeLinearIndicator(
+                              title: 'Sleep',
+                              value: currentSleep / dailyGoalSleep),
                         ],
                       ),
                     ),
@@ -308,7 +311,8 @@ class _MyWidgetState extends State<HomeScreeen> {
                               constraints: const BoxConstraints(
                                   maxHeight: 120, maxWidth: 120),
                               child: const Image(
-                                image: AssetImage('assets/images/mood-image.jpg'),
+                                image:
+                                    AssetImage('assets/images/mood-image.jpg'),
                               ),
                             ),
                           ),
@@ -323,28 +327,40 @@ class _MyWidgetState extends State<HomeScreeen> {
         ),
         drawer: CustomDrawer(context: context));
   }
-   Future<void> loadCurrentPage() async {
+
+  Future<void> loadCurrentPage() async {
     final page = await readPageService.getTodayPageAmount();
     setState(() {
       currentPage = page;
     });
   }
+
   Future<void> loadCurrentSleep() async {
     final sleep = await sleepService.getTodaySleepAmount();
     setState(() {
       currentSleep = sleep;
     });
   }
+
   Future<void> loadCurrentCount() async {
     final count = await walkService.getTodaycountAmount();
     setState(() {
       currentCount = count;
     });
   }
+
   Future<void> loadCurrentIntake() async {
     final intake = await waterService.getTodayIntakeAmount();
     setState(() {
       currentIntake = intake;
     });
+  }
+
+  Future<void> _navigateToTodo(BuildContext context) async {
+    final result = await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const TodoList()));
+    if (result == true) {
+      loadtodo();
+    }
   }
 }

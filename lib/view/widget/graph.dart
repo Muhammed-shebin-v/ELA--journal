@@ -114,7 +114,7 @@ class CustomGraph extends StatelessWidget {
                                       moodToValue(mood.mood),
                                   pointColorMapper: (MoodModel mood, _) =>
                                       colorSelector(mood
-                                          .mood), // Use colorSelector // Assuming you have a `moodLevel` property
+                                          .mood),
                                   name: 'Mood Level',
                                   borderColor: ElaColors.black,
                                   borderRadius: const BorderRadius.only(
@@ -169,4 +169,5 @@ class CustomGraph extends StatelessWidget {
         return 0;
     }
   }
+
 }

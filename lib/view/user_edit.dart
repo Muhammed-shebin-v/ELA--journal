@@ -17,7 +17,7 @@ class UserEdit extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<UserEdit> {
-  TextEditingController _name = TextEditingController();
+  final TextEditingController _name = TextEditingController();
   final TextEditingController _dob = TextEditingController();
   final TextEditingController _address = TextEditingController();
   final TextEditingController _phone = TextEditingController();
@@ -27,7 +27,6 @@ class _MyWidgetState extends State<UserEdit> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     loaddata();
   }
@@ -105,7 +104,7 @@ class _MyWidgetState extends State<UserEdit> {
                                             AssetImage('assets/icons/user.png'))
                                     : Image.memory(
                                         _imagebytes!,
-                                        fit: BoxFit.fill,
+                                        fit: BoxFit.cover,
                                       )),
                           ),
                         ),
@@ -169,7 +168,7 @@ class _MyWidgetState extends State<UserEdit> {
                                 color: Color.fromARGB(255, 137, 136, 136)),
                             filled: true,
                             suffixIcon: IconButton(
-                              icon: Icon(Icons.calendar_view_day),
+                              icon: Icon(Icons.calendar_month_outlined),
                               onPressed: () {
                                 _pickDate();
                               },
@@ -215,11 +214,13 @@ class _MyWidgetState extends State<UserEdit> {
                                 backgroundColor:
                                     const Color.fromRGBO(194, 246, 58, 1)),
                             onPressed: () {
+                              if(formKey.currentState!.validate()){
                               onAddUser();
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => const Notchbar()));
+                              }
                             },
                             child: const Text('Edit',
                                 style:

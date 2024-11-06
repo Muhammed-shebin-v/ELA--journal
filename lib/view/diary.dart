@@ -10,6 +10,7 @@ import 'package:new_ela/view/widget/container.dart';
 import 'package:new_ela/view/widget/heading.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:new_ela/view/widget/snackbar.dart';
 
 // ignore: must_be_immutable
 class Diary extends StatefulWidget {
@@ -43,7 +44,8 @@ class _DiaryState extends State<Diary> {
       if (widget.diary!.image2 != null) {
         _image2 = widget.diary!.image2;
       }
-    }  if (widget.selecteddate == null) {
+    }
+    if (widget.selecteddate == null) {
       todayDiary();
     }
   }
@@ -51,14 +53,15 @@ class _DiaryState extends State<Diary> {
   Future<void> todayDiary() async {
     final diaryEntry = await fetchDiary(date: DateTime.now());
     log('fn called');
-    diaryEntry!=null?
-      setState(() {
-         diarydata = diaryEntry;
-         log('data fetched and added');
-      })
-    :setState(() {
-      diarydata=DiaryModel(date: DateTime.now(), title: '', content: '');
-    });
+    diaryEntry != null
+        ? setState(() {
+            diarydata = diaryEntry;
+            log('data fetched and added');
+          })
+        : setState(() {
+            diarydata =
+                DiaryModel(date: DateTime.now(), title: '', content: '');
+          });
     if (diarydata!.title.isNotEmpty) {
       _titleController.text = diarydata!.title;
     }
@@ -95,7 +98,7 @@ class _DiaryState extends State<Diary> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-             const Gap(70),
+              const Gap(70),
               Row(
                 children: [
                   CustomBackButton(ctx: context),
@@ -140,14 +143,12 @@ class _DiaryState extends State<Diary> {
                               'Title:',
                               style: ElaTextStyle.formTitle,
                             ),
-                            SizedBox(
-                              width: 300,
-                              height: 20,
+                            Flexible(
                               child: TextFormField(
-                                style: ElaTextStyle.formitems,
+                                  maxLength: 40,
+                                  style: ElaTextStyle.formitems,
                                   controller: _titleController,
                                   decoration: const InputDecoration(
-                                    hintText: 'write title',
                                     enabledBorder: UnderlineInputBorder(
                                       borderSide:
                                           BorderSide(color: Colors.grey),
@@ -192,7 +193,7 @@ class _DiaryState extends State<Diary> {
                                         ? const Placeholder()
                                         : Image.memory(
                                             _image1!,
-                                            fit: BoxFit.fill,
+                                            fit: BoxFit.cover,
                                           ),
                                   ),
                                 ),
@@ -220,7 +221,7 @@ class _DiaryState extends State<Diary> {
                                         ? const Placeholder()
                                         : Image.memory(
                                             _image2!,
-                                            fit: BoxFit.fill,
+                                            fit: BoxFit.cover,
                                           ),
                                   ),
                                 ),
@@ -231,7 +232,15 @@ class _DiaryState extends State<Diary> {
                         const Gap(10),
                         InkWell(
                           onTap: () async {
-                            _saveddiary();
+                            if (_contentController.text.isNotEmpty &&
+                                _titleController.text.isNotEmpty) {
+                              _saveddiary();
+                            } else {
+                              customSnackBar(
+                                  ctx: context,
+                                  text: 'oops! Did you  miss something?',
+                                  color: ElaColors.red);
+                            }
                           },
                           child: Container(
                             height: 40,
@@ -262,6 +271,7 @@ class _DiaryState extends State<Diary> {
       ),
     );
   }
+
   void _saveddiary() async {
     final diaryEntry = DiaryModel(
         date: widget.selecteddate ?? DateTime.now(),
@@ -270,6 +280,6 @@ class _DiaryState extends State<Diary> {
         image1: _image1,
         image2: _image2);
     await addDiary(diary: diaryEntry);
-    Navigator.pop(context);
+    Navigator.pop(context, true);
   }
 }

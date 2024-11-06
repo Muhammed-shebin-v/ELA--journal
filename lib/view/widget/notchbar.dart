@@ -32,6 +32,7 @@ class NotchbarState extends State<Notchbar> {
       body: _pages[_controller.index],
       bottomNavigationBar: AnimatedNotchBottomBar(
         notchBottomBarController: _controller,
+        bottomBarWidth:MediaQuery.of(context).size.width,
         bottomBarItems: const [
           BottomBarItem(
             inActiveItem:

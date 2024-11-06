@@ -2,6 +2,8 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../model/user/user.dart';
@@ -34,18 +36,65 @@ Future<UserModel?> fetchUserdata() async {
 
 
 Future<Uint8List?> pickSaveImage() async{
-  final ImagePicker pick=ImagePicker();
-  final XFile? imagefile =await pick.pickImage(source: ImageSource.gallery);
+  try{
+    if(kIsWeb){
+      FilePickerResult? result =await FilePicker.platform.pickFiles(
+        type:FileType.image,
+        allowMultiple: false,
+      );
+      if(result !=null&& result.files.isNotEmpty){
+        return result.files.first.bytes;
+      }
+    }
+    else{
+  final ImagePicker _pick=ImagePicker();
+  final XFile? imagefile =await _pick.pickImage(source: ImageSource.gallery);
   log('image picked');
  if(imagefile!=null){
    Uint8List imageBytes=await File(imagefile.path).readAsBytes();
    log('image converted into bytes');
    return imageBytes;
  }
- else{
-  log('no image found');
- }
- return null;
 }
+}catch(e){
+  log('error picking image: $e');
+}
+}
+
+//   }
+//  else{
+//   log('no image found');
+//  }
+//  return null;
+// }
+
+// Future<void> _pickImage() async {
+//     try {
+//       if (kIsWeb) {
+//         // For Web: Use file_picker to get the image as Uint8List
+//         FilePickerResult? result = await FilePicker.platform.pickFiles(
+//           type: FileType.image,
+//           allowMultiple: false,
+//         );
+//         if (result != null && result.files.isNotEmpty) {
+//           setState(() {
+//             _imageData = result.files.first.bytes;
+//           });
+//         }
+//       } else {
+//         // For Mobile: Use image_picker to get the image as Uint8List
+//         final ImagePicker _picker = ImagePicker();
+//         final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+//         if (pickedFile != null) {
+//           final Uint8List imageBytes = await pickedFile.readAsBytes();
+//           setState(() {
+//             _imageData = imageBytes;
+//           });
+//         }
+//       }
+//     } catch (e) {
+//       print("Error picking image: $e");
+//     }
+//   }
 
 

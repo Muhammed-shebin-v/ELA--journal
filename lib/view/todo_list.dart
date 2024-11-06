@@ -46,7 +46,7 @@ class _TodoListState extends State<TodoList> {
                 children: [
                   IconButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.pop(context,true);
                     },
                     icon: const Icon(Icons.arrow_back_ios_new),
                     iconSize: 35,
@@ -209,7 +209,7 @@ class _TodoListState extends State<TodoList> {
           if (todos.isEmpty) {
             return const Center(
               child: Text(
-                'oops!No TODo',
+                'Add New ToDo',
                 style: ElaTextStyle.heading,
               ),
             );
@@ -222,51 +222,48 @@ class _TodoListState extends State<TodoList> {
               itemBuilder: (context, index) {
                 int reverseIndex = todos.length - 1 - index;
                 final todoitem = todos[reverseIndex];
-
-                return Container(
-                  margin: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 0.5),
-                    borderRadius: BorderRadius.circular(30),
-                    color: const Color.fromRGBO(245, 255, 210, 1),
-                  ),
-                  child: Row(
-                    children: [
-                      Checkbox(
-                        value: todoitem.isDone,
-                        onChanged: (value) async {
-                          todoitem.isDone = value;
-                          final todo = TodoModel(
-                              content: todoitem.content,
-                              isDone: todoitem.isDone);
-                          await updateTodo(
-                              todo: todo, updateindex: reverseIndex);
-                        },
-                        activeColor: const Color.fromRGBO(194, 246, 58, 1),
-                        checkColor: const Color.fromRGBO(0, 0, 0, 1),
-                      ),
-                      Expanded(
-                        child: Text(
-                          todoitem.content ?? 'no content',
-                          style: TextStyle(
-                            fontSize: 15,
-                            decoration: todoitem.isDone ?? false
-                                ? TextDecoration.lineThrough
-                                : TextDecoration.none,
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CustomContainer(
+                    color: ElaColors.lightgreen,
+                    child: Row(
+                      children: [
+                        Checkbox(
+                          value: todoitem.isDone,
+                          onChanged: (value) async {
+                            todoitem.isDone = value;
+                            final todo = TodoModel(
+                                content: todoitem.content,
+                                isDone: todoitem.isDone);
+                            await updateTodo(
+                                todo: todo, updateindex: reverseIndex);
+                          },
+                          activeColor: ElaColors.green,
+                          checkColor: ElaColors.black,
+                        ),
+                        Expanded(
+                          child: Text(
+                            todoitem.content ?? 'no content',
+                            style: TextStyle(
+                              fontSize: 15,
+                              decoration: todoitem.isDone ?? false
+                                  ? TextDecoration.lineThrough
+                                  : TextDecoration.none,
+                            ),
                           ),
                         ),
-                      ),
-                      IconButton(
-                          onPressed: () {
-                            editDialog(index: reverseIndex, todoitem: todoitem);
-                          },
-                          icon: const Icon(Icons.edit)),
-                      IconButton(
-                          onPressed: () {
-                            _deleteDialog(reverseIndex);
-                          },
-                          icon: const Icon(Icons.delete))
-                    ],
+                        IconButton(
+                            onPressed: () {
+                              editDialog(index: reverseIndex, todoitem: todoitem);
+                            },
+                            icon: const Icon(Icons.edit_outlined)),
+                        IconButton(
+                            onPressed: () {
+                              _deleteDialog(reverseIndex);
+                            },
+                            icon: const Icon(Icons.delete_outlined))
+                      ],
+                    ),
                   ),
                 );
               },

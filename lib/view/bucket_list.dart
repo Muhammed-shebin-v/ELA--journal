@@ -32,7 +32,7 @@ class _BucketListState extends State<BucketList> {
   Future<void> loaddata() async {
     buckets = await getBucket();
     bucketNotifier.value = buckets;
-    log('getdata worked');
+     log('getdata worked');
     _filter(selectedIndex ??= 0);
   }
 
@@ -99,14 +99,14 @@ class _BucketListState extends State<BucketList> {
                             CustomContainer(
                                 height: 35,
                                 color: ElaColors.lightgreen,
-                                child: 
-                                DropdownButton(
+                                child: DropdownButton(
                                   value: _selectedValue,
                                   dropdownColor: ElaColors.lightgreen,
                                   onChanged: (String? newvalue) {
                                     setState(() {
                                       _selectedValue = newvalue;
-                                      selectedIndex =_dropDownItems.indexOf(newvalue!);
+                                      selectedIndex =
+                                          _dropDownItems.indexOf(newvalue!);
                                       _filter(selectedIndex!);
                                     });
                                   },
@@ -117,13 +117,13 @@ class _BucketListState extends State<BucketList> {
                                       value: value,
                                       alignment: AlignmentDirectional.topStart,
                                       child: Padding(
-                                        padding: const EdgeInsets.only(left: 9.0, top: 4),
+                                        padding: const EdgeInsets.only(
+                                            left: 9.0, top: 4),
                                         child: Text(value),
                                       ),
                                     );
                                   }).toList(),
-                                )
-                                ),
+                                )),
                             InkWell(
                                 onTap: () {
                                   _navigateToCreatePage(context);
@@ -148,8 +148,6 @@ class _BucketListState extends State<BucketList> {
     );
   }
 
-  
-
   Widget bucketListUI() {
     return ValueListenableBuilder<List<BucketModel>>(
         valueListenable: bucketNotifier,
@@ -160,7 +158,7 @@ class _BucketListState extends State<BucketList> {
                 Gap(100),
                 Center(
                   child: Text(
-                    'No BucketList',
+                    'Add New BucketList',
                     style: ElaTextStyle.heading,
                   ),
                 ),
@@ -180,14 +178,7 @@ class _BucketListState extends State<BucketList> {
                   final int daysLeft = calculateDaysLeft(bucketItem.finalDate!);
                   return InkWell(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => BucketEdit(
-                                    index: reverseIndex,
-                                    bucket: bucketItem,
-                                    readonly: true,
-                                  )));
+                     _navigateToUpdate(context, reverseIndex, bucketItem, true);
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -202,26 +193,21 @@ class _BucketListState extends State<BucketList> {
                                 ),
                                 Expanded(
                                   child: Text(bucketItem.title ?? 'invalid',
-                                      style: ElaTextStyle.subHeading),
+                                      style: ElaTextStyle.title),
                                 ),
                                 IconButton(
                                     onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => BucketEdit(
-                                                    index: reverseIndex,
-                                                    bucket: bucketItem,
-                                                    readonly: false,
-                                                  )));
+                                     _navigateToUpdate(context, reverseIndex, bucketItem, false);
                                     },
-                                    icon: const Icon(Icons.edit)),
+                                    icon: const Icon(Icons.edit_outlined)),
                                 IconButton(
-                                    onPressed: () async{
-                                      deleteBucketItem(deleteIndex: reverseIndex, context: context);
+                                    onPressed: () async {
+                                      deleteBucketItem(
+                                          deleteIndex: reverseIndex,
+                                          context: context);
                                       await loaddata();
                                     },
-                                    icon: const Icon(Icons.delete))
+                                    icon: const Icon(Icons.delete_outline))
                               ],
                             ),
                             Padding(
@@ -241,12 +227,26 @@ class _BucketListState extends State<BucketList> {
         });
   }
 
-  
-
   Future<void> _navigateToCreatePage(BuildContext context) async {
     final result = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const BucketView()),
+    );
+    if (result == true) {
+      initwork();
+    }
+  }
+
+  Future<void> _navigateToUpdate(
+      BuildContext context, reverseIndex, bucketItem, readonly,) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => BucketEdit(
+                index: reverseIndex,
+                bucket: bucketItem,
+                readonly: readonly,
+              )),
     );
     if (result == true) {
       initwork();

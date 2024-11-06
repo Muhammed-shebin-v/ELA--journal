@@ -137,13 +137,7 @@ class _MyWidgetState extends State<Calender> {
               InkWell(
                 onTap: () {
                   if (_selectedDate.isBefore(DateTime.now())) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Diary(
-                                  diary: _diaryEntries,
-                                  selecteddate: _selectedDate,
-                                )));
+                   _navigateToDiary(context, _diaryEntries, _selectedDate);
                   } else {
                     customSnackBar(
                         color: ElaColors.red,
@@ -158,11 +152,13 @@ class _MyWidgetState extends State<Calender> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                            _diaryEntries != null
-                                ? _diaryEntries!.title
-                                : 'oops! No Diary Found ',
-                            style: ElaTextStyle.title),
+                        Flexible(
+                          child: Text(
+                              _diaryEntries != null
+                                  ? _diaryEntries!.title
+                                  : 'oops! No Diary Found ',
+                              style: ElaTextStyle.title),
+                        ),
                         Text(
                           DateFormat('dd-MM-yyyy').format(_selectedDate),
                           style: ElaTextStyle.subTitle,
@@ -178,5 +174,16 @@ class _MyWidgetState extends State<Calender> {
         ),
       )),
     );
+  }
+   Future<void> _navigateToDiary(
+      BuildContext context,diaryEntry,selectedDate) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => Diary(diary: diaryEntry,selecteddate: selectedDate)),
+    );
+    if (result == true) {
+      _loadDiaryEntries();
+    }
   }
 }

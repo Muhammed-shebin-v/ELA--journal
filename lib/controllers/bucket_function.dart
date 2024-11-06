@@ -4,7 +4,7 @@ import 'package:new_ela/model/bucket/bucket_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-ValueNotifier<List<BucketModel>> bucketNotifier=ValueNotifier([]);
+ValueNotifier<List<BucketModel>> bucketNotifier = ValueNotifier([]);
 
 Future<void> addBucket({required BucketModel bucket}) async{
 final bucketdb= await Hive.openBox<BucketModel>('bucket');
@@ -18,7 +18,7 @@ Future<void> updateBucket({required BucketModel bucket,required int index})async
   log('updated bucket');
 }
 Future<List<BucketModel>> getBucket()  async{
-  final bucketdb=await Hive.openBox<BucketModel>('bucket');
+  final bucketdb= await Hive.openBox<BucketModel>('bucket');
   return bucketdb.values.toList().cast<BucketModel>();
 }
 

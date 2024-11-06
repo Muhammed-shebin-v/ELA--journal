@@ -134,7 +134,7 @@ class _UserDetailsState extends State<UserDetails> {
         intervels: 500,
         maximumvalue: 4000,
         unit: 'mL',
-        titleLength: 200,
+        titleLength: 190,
       ),
       CustomGraph(
           weeklyData: weeklyWalkData,
@@ -144,7 +144,7 @@ class _UserDetailsState extends State<UserDetails> {
           intervels: 1000,
           maximumvalue: 10000,
           unit: 'step',
-          titleLength: 200),
+          titleLength: 190),
       CustomGraph(
           weeklyData: weeklyReadData,
           modelType: 'read',
@@ -162,51 +162,52 @@ class _UserDetailsState extends State<UserDetails> {
           intervels: 1,
           maximumvalue: 8,
           unit: 'Hr',
-          titleLength: 200),
+          titleLength: 185),
     ];
     return Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
           child: SingleChildScrollView(
               child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                           Padding(
-                padding: const EdgeInsets.only(right: 20.0, top: 10),
-                child: Builder(builder: (context) {
-                  return InkWell(
-                    onTap: () {
-                      Scaffold.of(context).openDrawer();
-                    },
-                    child: const Image(
-                        height: 35,
-                        width: 35,
-                        image: AssetImage('assets/icons/setting-lines.png')),
-                  );
-                }),
-              ),
-              Stack(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: Container(
-                      height: 35,
-                      width: 85,
-                      decoration: BoxDecoration(
-                          color: const Color.fromRGBO(245, 255, 210, 1),
-                          borderRadius: BorderRadius.circular(5)),
+                  padding: const EdgeInsets.only(left: 20.0, right: 20),
+                  child: Column(children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 20.0, top: 10),
+                          child: Builder(builder: (context) {
+                            return InkWell(
+                              onTap: () {
+                                Scaffold.of(context).openDrawer();
+                              },
+                              child: const Image(
+                                  height: 40,
+                                  width: 40,
+                                  image:
+                                      AssetImage('assets/icons/hamburger.png')),
+                            );
+                          }),
+                        ),
+                        Stack(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Container(
+                                height: 35,
+                                width: 85,
+                                decoration: BoxDecoration(
+                                    color:
+                                        const Color.fromRGBO(245, 255, 210, 1),
+                                    borderRadius: BorderRadius.circular(5)),
+                              ),
+                            ),
+                            Text('ELA', style: GoogleFonts.kalnia(fontSize: 40))
+                          ],
+                        ),
+                      ],
                     ),
-                  ),
-                  Text('ELA', style: GoogleFonts.kalnia(fontSize: 40))
-                ],
-              ),
-          
-                        ],
-                      ),
+                    const Gap(20),
                     CustomContainer(
                       color: ElaColors.lightgreen,
                       boxshadow: true,
@@ -229,10 +230,10 @@ class _UserDetailsState extends State<UserDetails> {
                                       ? const Image(
                                           fit: BoxFit.fill,
                                           image: AssetImage(
-                                              'assets/images/IMG_7399.JPG'))
+                                              'assets/icons/user.png'))
                                       : Image.memory(
                                           _user!.image!,
-                                          fit: BoxFit.fill,
+                                          fit: BoxFit.cover,
                                         )),
                             ),
                           ),

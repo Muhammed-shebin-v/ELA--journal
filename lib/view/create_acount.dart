@@ -7,6 +7,7 @@ import 'package:new_ela/view/theme/app_textstyle.dart';
 import 'package:new_ela/view/widget/container.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
+import 'package:new_ela/view/widget/snackbar.dart';
 import '../controllers/user_functions.dart';
 import 'widget/notchbar.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +43,7 @@ class _MyWidgetState extends State<SignUp> {
                     'Create\nAccount',
                     style: ElaTextStyle.heading,
                   )),
-             const Gap(20),
+              const Gap(20),
               CustomContainer(
                 color: ElaColors.lightgrey,
                 boxshadow: true,
@@ -69,8 +70,8 @@ class _MyWidgetState extends State<SignUp> {
                                 borderRadius: BorderRadius.circular(100),
                                 child: _imagebytes == null
                                     ? const Image(
-                                        image: AssetImage(
-                                            'assets/icons/user.png'))
+                                        image:
+                                            AssetImage('assets/icons/user.png'))
                                     : Image.memory(
                                         _imagebytes!,
                                         fit: BoxFit.fill,
@@ -126,20 +127,22 @@ class _MyWidgetState extends State<SignUp> {
                         TextFormField(
                           controller: _dob,
                           decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30)),
-                              fillColor: const Color.fromRGBO(245, 255, 210, 1),
-                              labelText: 'Date of Birth',
-                              labelStyle: const TextStyle(
-                                  fontSize: 20,
-                                  color: Color.fromARGB(255, 137, 136, 136)),
-                              filled: true,
-                              suffixIcon: IconButton(icon: const Icon(Icons.calendar_view_day),onPressed: () {
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30)),
+                            fillColor: const Color.fromRGBO(245, 255, 210, 1),
+                            labelText: 'Date of Birth',
+                            labelStyle: const TextStyle(
+                                fontSize: 20,
+                                color: Color.fromARGB(255, 137, 136, 136)),
+                            filled: true,
+                            suffixIcon: IconButton(
+                              icon: const Icon(Icons.calendar_month_outlined),
+                              onPressed: () {
                                 _pickDate();
-                              },),
-                              ),
-                              readOnly: true,
-                              
+                              },
+                            ),
+                          ),
+                          readOnly: true,
                         ),
                         const SizedBox(height: 20),
                         TextFormField(
@@ -179,13 +182,20 @@ class _MyWidgetState extends State<SignUp> {
                                 backgroundColor:
                                     const Color.fromRGBO(194, 246, 58, 1)),
                             onPressed: () async {
-                              if (formkey.currentState!.validate()) {
-                                await onaddUser();
-                                // ignore: use_build_context_synchronously
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const Notchbar()));
+                              if (_dob.text.isNotEmpty) {
+                                if (formkey.currentState!.validate()) {
+                                  await onaddUser();
+                                  // ignore: use_build_context_synchronously
+                                  Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const Notchbar()));
+                                }
+                              } else {
+                                customSnackBar(
+                                    ctx: context,
+                                    text: 'add your BirtDate',
+                                    color: ElaColors.red);
                               }
                             },
                             child: const Text('Create',
@@ -226,26 +236,22 @@ class _MyWidgetState extends State<SignUp> {
     await addUser(user: user);
   }
 
- void _pickDate() {
+  void _pickDate() {
     BottomPicker.date(
-      pickerTitle:const Text( 'Select your birthday',),
-   onSubmit: (date) {
-      try {
-        String formattedDate = DateFormat('yyyy-MM-dd').format(date);
-        _dob.text = formattedDate;
-      } catch (e) {
-        log('Error formatting date: $e');
-      }
-    },
-      bottomPickerTheme: BottomPickerTheme.blue, 
-      initialDateTime: DateTime.now(), 
-      maxDateTime: DateTime.now(), 
+      pickerTitle: const Text(
+        'Select your birthday',
+      ),
+      onSubmit: (date) {
+        try {
+          String formattedDate = DateFormat('yyyy-MM-dd').format(date);
+          _dob.text = formattedDate;
+        } catch (e) {
+          log('Error formatting date: $e');
+        }
+      },
+      bottomPickerTheme: BottomPickerTheme.blue,
+      initialDateTime: DateTime.now(),
+      maxDateTime: DateTime.now(),
     ).show(context);
   }
-
-
 }
-
-
-  
-

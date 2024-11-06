@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class ElaTextStyle{
   static const TextStyle heading = TextStyle(fontSize: 30,fontWeight: FontWeight.w500,);
+  static const TextStyle privacyheading=TextStyle(fontSize: 25,fontWeight: FontWeight.w400,);
   static const TextStyle subHeading = TextStyle(fontSize: 23);
   static const TextStyle title = TextStyle(fontSize: 20,fontWeight: FontWeight.w500);
   static TextStyle subTitle = TextStyle(fontSize: 15,color: ElaColors.black);

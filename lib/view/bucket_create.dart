@@ -14,6 +14,7 @@ import 'package:new_ela/view/widget/heading.dart';
 import 'package:new_ela/view/widget/image_add.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:new_ela/view/widget/snackbar.dart';
 
 class BucketView extends StatefulWidget {
   const BucketView({
@@ -33,6 +34,7 @@ class _BucketViewState extends State<BucketView> {
     _textindex = _dropDownItems.indexOf(_selectedValue!);
   }
 
+  final _formkey = GlobalKey<FormState>();
   final List<String> _dropDownItems = ['Travel', 'Activity', 'Purchase'];
   final List<String> _displayTexts = [
     'Destination:',
@@ -75,145 +77,170 @@ class _BucketViewState extends State<BucketView> {
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Form(
-                      child: Column(
-                        children: [
-                          const Gap(30),
-                          Align(
-                            alignment: Alignment.topRight,
-                            child: CustomContainer(
-                                height: 30,
-                                width: 130,
-                                color: ElaColors.green,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 16.0),
-                                  child: DropdownButton(
-                                    value: _selectedValue,
-                                    onChanged: (String? newvalue) {
-                                      setState(() {
-                                        _selectedValue = newvalue;
-                                        _textindex = _dropDownItems
-                                            .indexOf(_selectedValue!);
-                                        _displayText =
-                                            _displayTexts[_textindex!];
-                                      });
-                                    },
-                                    items: _dropDownItems
-                                        .map<DropdownMenuItem<String>>(
-                                            (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        alignment:
-                                            AlignmentDirectional.topStart,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
-                                  ),
-                                )),
-                          ),
-                          const Gap(10),
-                          CustomBucketForm(
-                              title: 'Title : ', controller: _titleController),
-                          CustomBucketForm(
-                              title: '$_displayText',
-                              controller: _destinationController),
-                          Row(
-                            children: [
-                              const Text('Final Date : ',
-                                  style: ElaTextStyle.formTitle),
-                              Flexible(
-                                child: TextFormField(
-                                    controller: _finalDateController,
-                                    readOnly: true,
-                                    decoration: InputDecoration(
-                                        hintText: _finalDate != null
-                                            ? '${_finalDate!.year}-${_finalDate!.month.toString().padLeft(2, '0')}-${_finalDate!.day.toString().padLeft(2, '0')}'
-                                            : 'Pick Final Date',
-                                        enabledBorder:
-                                            const UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                        focusedBorder:
-                                            const UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color:
-                                                  Color.fromARGB(255, 0, 0, 0),
-                                              width: 2),
-                                        ),
-                                        suffixIcon: IconButton(
-                                            onPressed: () {
-                                              _pickDate();
-                                            },
-                                            icon: const Icon(Icons
-                                                .calendar_view_day_rounded)))),
-                              ),
-                            ],
-                          ),
-                          const Gap(20),
-                          TextFormField(
-                            style: ElaTextStyle.title,
-                            controller: _contentController,
-                            maxLines: null,
-                            keyboardType: TextInputType.multiline,
-                            decoration: const InputDecoration(
-                              hintText: 'Write your BucketList ',
-                              border: InputBorder.none,
+                      child: Form(
+                        key: _formkey,
+                        child: Column(
+                          children: [
+                            const Gap(20),
+                            Align(
+                              alignment: Alignment.topRight,
+                              child: CustomContainer(
+                                  height: 30,
+                                  width: 130,
+                                  color: ElaColors.green,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 16.0),
+                                    child: DropdownButton(
+                                      dropdownColor: ElaColors.lightgreen,
+                                      value: _selectedValue,
+                                      onChanged: (String? newvalue) {
+                                        setState(() {
+                                          _selectedValue = newvalue;
+                                          _textindex = _dropDownItems
+                                              .indexOf(_selectedValue!);
+                                          _displayText =
+                                              _displayTexts[_textindex!];
+                                        });
+                                      },
+                                      items: _dropDownItems
+                                          .map<DropdownMenuItem<String>>(
+                                              (String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          alignment:
+                                              AlignmentDirectional.topStart,
+                                          child: Text(value),
+                                        );
+                                      }).toList(),
+                                    ),
+                                  )),
                             ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CustomImageAdd(
-                                  image: _image1,
-                                  onImageSelected: (image) {
-                                    setState(() {
-                                      _image1 = image;
-                                    });
-                                  }),
-                              CustomImageAdd(
-                                  image: _image2,
-                                  onImageSelected: (image) {
-                                    setState(() {
-                                      _image2 = image;
-                                    });
-                                  })
-                            ],
-                          ),
-                          InkWell(
-                              onTap: () async {
-                                if (_titleController.text.isNotEmpty &&
-                                    _contentController.text.isNotEmpty &&
-                                    _finalDate != null) {
-                                  final bucket = BucketModel(
-                                      title: _titleController.text.trim(),
-                                      content: _contentController.text.trim(),
-                                      destination:
-                                          _destinationController.text.trim(),
-                                      finalDate: _finalDate!,
-                                      catogarynumber: _textindex,
-                                      createDate: createDate,
-                                      image1: _image1,
-                                      image2: _image2);
-                                  await addBucket(bucket: bucket);
-                                  // ignore: use_build_context_synchronously
-                                  Navigator.pop(context, true);
-                                  _titleController.clear();
-                                  _contentController.clear();
-                                  _destinationController.clear();
-                                  _finalDateController.clear();
-                                  _finalDate = null;
-                                  log('$_textindex');
-                                } else {
-                                  Navigator.pop(context);
-                                  log('error');
+                            const Gap(10),
+                            CustomBucketForm(
+                              title: 'Title : ',
+                              controller: _titleController,
+                              maxlength: 30,
+                            ),
+                            CustomBucketForm(
+                              title: '$_displayText',
+                              controller: _destinationController,
+                            ),
+                            Row(
+                              children: [
+                                const Text('Final Date : ',
+                                    style: ElaTextStyle.formTitle),
+                                Flexible(
+                                  child: TextFormField(
+                                      validator: (value) {
+                                        if (value == null ||
+                                            value.isEmpty ||
+                                            num.tryParse(value) == null ||
+                                            value.length != 10) {
+                                          return 'ooops! enter final date';
+                                        }
+                                        return null;
+                                      },
+                                      autovalidateMode:
+                                          AutovalidateMode.onUnfocus,
+                                      controller: _finalDateController,
+                                      readOnly: true,
+                                      decoration: InputDecoration(
+                                          hintText: _finalDate != null
+                                              ? '${_finalDate!.year}-${_finalDate!.month.toString().padLeft(2, '0')}-${_finalDate!.day.toString().padLeft(2, '0')}'
+                                              : 'Pick Final Date',
+                                          enabledBorder:
+                                              const UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                          focusedBorder:
+                                              const UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color.fromARGB(
+                                                    255, 0, 0, 0),
+                                                width: 2),
+                                          ),
+                                          suffixIcon: IconButton(
+                                              onPressed: () {
+                                                _pickDate();
+                                              },
+                                              icon: const Icon(Icons
+                                                  .calendar_month_outlined)))),
+                                ),
+                              ],
+                            ),
+                            const Gap(20),
+                            TextFormField(
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Did you miss something?';
                                 }
+                                return null;
                               },
-                              child: CustomButton(
-                                text: 'SAVE',
-                                width: 75,
-                              )),
-                        ],
+                              autovalidateMode: AutovalidateMode.onUnfocus,
+                              style: ElaTextStyle.subTitle,
+                              controller: _contentController,
+                              maxLines: null,
+                              keyboardType: TextInputType.multiline,
+                              decoration: const InputDecoration(
+                                hintText: 'Write your BucketList ',
+                                border: InputBorder.none,
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                CustomImageAdd(
+                                    image: _image1,
+                                    onImageSelected: (image) {
+                                      setState(() {
+                                        _image1 = image;
+                                      });
+                                    }),
+                                CustomImageAdd(
+                                    image: _image2,
+                                    onImageSelected: (image) {
+                                      setState(() {
+                                        _image2 = image;
+                                      });
+                                    })
+                              ],
+                            ),
+                            InkWell(
+                                onTap: () async {
+                                  if (_titleController.text.isNotEmpty &&
+                                      _contentController.text.isNotEmpty &&
+                                      _finalDate != null) {
+                                    final bucket = BucketModel(
+                                        title: _titleController.text.trim(),
+                                        content: _contentController.text.trim(),
+                                        destination:
+                                            _destinationController.text.trim(),
+                                        finalDate: _finalDate!,
+                                        catogarynumber: _textindex,
+                                        createDate: createDate,
+                                        image1: _image1,
+                                        image2: _image2);
+                                    await addBucket(bucket: bucket);
+                                    // ignore: use_build_context_synchronously
+                                    Navigator.pop(context, true);
+                                    _titleController.clear();
+                                    _contentController.clear();
+                                    _destinationController.clear();
+                                    _finalDateController.clear();
+                                    _finalDate = null;
+                                    log('$_textindex');
+                                  }else{
+                                    customSnackBar(ctx: context, text: "oops! Did you miss  something?", color: ElaColors.red);
+                                  }
+                                },
+                                child: CustomButton(
+                                  text: 'SAVE',
+                                  width: 75,
+                                )),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -225,6 +252,7 @@ class _BucketViewState extends State<BucketView> {
       ),
     );
   }
+
   void _pickDate() {
     BottomPicker.date(
       pickerTitle: const Text(
@@ -236,9 +264,8 @@ class _BucketViewState extends State<BucketView> {
         });
       },
       bottomPickerTheme: BottomPickerTheme.blue,
-      initialDateTime: DateTime.now(),
-      maxDateTime: DateTime(2050),
-      minDateTime: DateTime(2023),
+      maxDateTime: DateTime(2100),
+      minDateTime:DateTime.now().add(const Duration(days: 10)),
     ).show(context);
   }
 }
