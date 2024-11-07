@@ -27,7 +27,7 @@ class _WriteState extends State<Write> {
             padding: const EdgeInsets.all(20.0),
             child: Column(
               children: [
-                 Gap(20),
+                 const Gap(20),
                     Column(
                       children: [
                         const CustomHeading(heading: 'Write',length: 80,),
@@ -44,7 +44,7 @@ class _WriteState extends State<Write> {
                             title: 'To Do.',
                             titlelength: 71,
                             subtitle:
-                                '             add your to do list here.\nyou can mark the list items after\n          you completed that tasks.',
+                                'add your to do list here.you can mark the list items after you completed that tasks.',
                             image: 'assets/images/IMG_3765 2.jpg',
                             location: TodoList()),
                         const Gap(40),

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:new_ela/controllers/read_goal.dart';
 import 'package:new_ela/controllers/sleep_goal.dart';
@@ -208,76 +210,94 @@ class _UserDetailsState extends State<UserDetails> {
                       ],
                     ),
                     const Gap(20),
-                    CustomContainer(
-                      color: ElaColors.lightgreen,
-                      boxshadow: true,
-                      height: 200,
-                      child: Row(children: [
-                        Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 15),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(width: 1.5),
-                                borderRadius: BorderRadius.circular(80),
+                      CustomContainer(
+                          color: ElaColors.lightgreen,
+                          boxshadow: true,
+                          height: 200,
+                          child: Row(children: [
+                            Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 15),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(width: 1.5),
+                                    borderRadius: BorderRadius.circular(80),
+                                  ),
+                                  height: 140,
+                                  width: 140,
+                                  child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(100),
+                                      child: _user?.image == null
+                                          ? const Image(
+                                              fit: BoxFit.fill,
+                                              image: AssetImage(
+                                                  'assets/icons/user.png'))
+                                          : Image.memory(
+                                              _user!.image!,
+                                              fit: BoxFit.cover,
+                                            )),
+                                ),
                               ),
-                              height: 140,
-                              width: 140,
-                              child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(100),
-                                  child: _user?.image == null
-                                      ? const Image(
-                                          fit: BoxFit.fill,
-                                          image: AssetImage(
-                                              'assets/icons/user.png'))
-                                      : Image.memory(
-                                          _user!.image!,
-                                          fit: BoxFit.cover,
-                                        )),
                             ),
-                          ),
-                        ),
-                        const Gap(10),
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Name : ${_user?.name ?? 'Not Available'}',
-                              style: ElaTextStyle.subTitle,
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              'Address : ${_user?.address ?? 'Not Available'}',
-                              style: ElaTextStyle.subTitle,
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              'DOB : ${_user?.dob ?? 'Not Available'}',
-                              style: ElaTextStyle.subTitle,
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              'Phone : ${_user?.phone.toString() ?? 'Not Available'}',
-                              style: ElaTextStyle.subTitle,
+                            const Gap(10),
+                            Flexible(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                
+                                     
+                                      
+                                         Text(
+                                          'Name : ${_user?.name ?? 'Not Available'}',
+                                          style: ElaTextStyle.subTitle,
+                                          maxLines: 2,
+                                          ),
+                                       
+                                     
+                                  
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  
+                                   Flexible(
+                                     child: Text(
+                                        'Address : ${_user?.address ?? 'Not Available'}',
+                                        style: ElaTextStyle.subTitle,
+                                      ),
+                                   ),
+                                  
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Flexible(
+                                    child: Text(
+                                      'DOB : ${_user?.dob ?? 'Not Available'}',
+                                      style: ElaTextStyle.subTitle,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Flexible(
+                                    child: Text(
+                                      'Phone : ${_user?.phone.toString() ?? 'Not Available'}',
+                                      style: ElaTextStyle.subTitle,
+                                    ),
+                                  )
+                                ],
+                              ),
                             )
-                          ],
-                        )
-                      ]),
-                    ),
+                          ]),
+                        ),
+                     
                     const Gap(30),
                     CustomGraph(
                         weeklyData: weeklyMoodData,
                         modelType: 'mood',
-                        errorMessage: 'error',
+                        errorMessage: 'Add Your Mood First',
                         title: 'mood',
                         intervels: 1,
                         maximumvalue: 6),

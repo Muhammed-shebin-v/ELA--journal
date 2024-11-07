@@ -137,7 +137,7 @@ class _MyWidgetState extends State<Calender> {
               InkWell(
                 onTap: () {
                   if (_selectedDate.isBefore(DateTime.now())) {
-                   _navigateToDiary(context, _diaryEntries, _selectedDate);
+                    _navigateToDiary(context, _diaryEntries, _selectedDate);
                   } else {
                     customSnackBar(
                         color: ElaColors.red,
@@ -175,12 +175,14 @@ class _MyWidgetState extends State<Calender> {
       )),
     );
   }
-   Future<void> _navigateToDiary(
-      BuildContext context,diaryEntry,selectedDate) async {
+
+  Future<void> _navigateToDiary(
+      BuildContext context, diaryEntry, selectedDate) async {
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => Diary(diary: diaryEntry,selecteddate: selectedDate)),
+          builder: (context) =>
+              Diary(diary: diaryEntry, selecteddate: selectedDate)),
     );
     if (result == true) {
       _loadDiaryEntries();

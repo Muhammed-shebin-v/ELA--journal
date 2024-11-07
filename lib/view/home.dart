@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:new_ela/controllers/quote.dart';
+import 'package:new_ela/view/widget/quote.dart';
 import 'package:new_ela/controllers/read_goal.dart';
 import 'package:new_ela/controllers/sleep_goal.dart';
 import 'package:new_ela/controllers/todo_function.dart';

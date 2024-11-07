@@ -168,7 +168,7 @@ class _MyWidgetState extends State<UserEdit> {
                                 color: Color.fromARGB(255, 137, 136, 136)),
                             filled: true,
                             suffixIcon: IconButton(
-                              icon: Icon(Icons.calendar_month_outlined),
+                              icon: const Icon(Icons.calendar_month_outlined),
                               onPressed: () {
                                 _pickDate();
                               },
@@ -259,7 +259,7 @@ class _MyWidgetState extends State<UserEdit> {
 
   void _pickDate() {
     BottomPicker.date(
-      pickerTitle: Text(
+      pickerTitle: const Text(
         'Select your birthday',
       ),
       onSubmit: (date) {

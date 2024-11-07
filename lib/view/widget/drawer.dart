@@ -16,38 +16,38 @@ class CustomDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Gap(150),
-            Stack(
-              children: [Text('ELA', style: GoogleFonts.kalnia(fontSize: 50))],
-            ),
-            const Gap(20),
-            const DrawerItem(text: 'Edit Details', screen: UserEdit()),
-            InkWell(
-              onTap: () {
-                elaaboutDialog(context);
-              },
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'About',
-                    style: ElaTextStyle.title,
-                  ),
-                  Icon(Icons.arrow_forward_ios)
-                ],
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                children: [Text('ELA', style: GoogleFonts.kalnia(fontSize: 50))],
               ),
-            ),
-            const DrawerItem(text: 'Privacy Policy', screen: PrivacyPolicy()),
-            const DrawerItem(text: 'Legal Terms', screen: LegalTerms()),
-            const Gap(50),
-            const Text('VERSION - 1.0.0',style: ElaTextStyle.title,),
-            
-          ],
+              const Gap(20),
+              const DrawerItem(text: 'Edit Details', screen: UserEdit()),
+              InkWell(
+                onTap: () {
+                  elaaboutDialog(context);
+                },
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'About',
+                      style: ElaTextStyle.title,
+                    ),
+                    Icon(Icons.arrow_forward_ios)
+                  ],
+                ),
+              ),
+              const DrawerItem(text: 'Privacy Policy', screen: PrivacyPolicy()),
+              const DrawerItem(text: 'Legal Terms', screen: LegalTerms()),
+              const Gap(50),
+              const Text('VERSION - 1.0.2',style: ElaTextStyle.title,),
+            ],
+          ),
         ),
       ),
     );

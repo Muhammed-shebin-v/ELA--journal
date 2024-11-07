@@ -76,19 +76,6 @@ class _DiaryState extends State<Diary> {
     }
     widget.selecteddate ??= diarydata!.date;
   }
-
-  @override
-  // void didChangeDependencies() {
-  //   super.didChangeDependencies();
-  //   if (widget.diary != null) {
-  //     _titleController.text = widget.diary!.title;
-  //     _contentController.text = widget.diary!.content;
-  //   } else {
-  //     _titleController.text = '';
-  //     _contentController.text = '';
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -144,16 +131,21 @@ class _DiaryState extends State<Diary> {
                               style: ElaTextStyle.formTitle,
                             ),
                             Flexible(
-                              child: TextFormField(
-                                  maxLength: 40,
-                                  style: ElaTextStyle.formitems,
-                                  controller: _titleController,
-                                  decoration: const InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.grey),
-                                    ),
-                                  )),
+                              child: Column(
+                                children:[ 
+                                  const Gap(20),
+                                  TextFormField(
+                                    maxLength: 40,
+                                    style: ElaTextStyle.formitems,
+                                    controller: _titleController,
+                                    decoration: const InputDecoration(
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.grey),
+                                      ),
+                                    )),
+                                ]
+                              ),
                             ),
                           ],
                         ),

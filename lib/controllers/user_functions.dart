@@ -61,40 +61,6 @@ Future<Uint8List?> pickSaveImage() async{
 }
 }
 
-//   }
-//  else{
-//   log('no image found');
-//  }
-//  return null;
-// }
 
-// Future<void> _pickImage() async {
-//     try {
-//       if (kIsWeb) {
-//         // For Web: Use file_picker to get the image as Uint8List
-//         FilePickerResult? result = await FilePicker.platform.pickFiles(
-//           type: FileType.image,
-//           allowMultiple: false,
-//         );
-//         if (result != null && result.files.isNotEmpty) {
-//           setState(() {
-//             _imageData = result.files.first.bytes;
-//           });
-//         }
-//       } else {
-//         // For Mobile: Use image_picker to get the image as Uint8List
-//         final ImagePicker _picker = ImagePicker();
-//         final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-//         if (pickedFile != null) {
-//           final Uint8List imageBytes = await pickedFile.readAsBytes();
-//           setState(() {
-//             _imageData = imageBytes;
-//           });
-//         }
-//       }
-//     } catch (e) {
-//       print("Error picking image: $e");
-//     }
-//   }
 
 

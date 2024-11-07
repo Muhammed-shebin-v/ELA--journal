@@ -34,6 +34,7 @@ class _TodoListState extends State<TodoList> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -41,7 +42,7 @@ class _TodoListState extends State<TodoList> {
           padding: const EdgeInsets.all(10.0),
           child: Column(
             children: [
-              const Gap(90),
+              SizedBox(height: screenHeight *0.1,),
               Row(
                 children: [
                   IconButton(
@@ -77,7 +78,7 @@ class _TodoListState extends State<TodoList> {
                               )),
                         ),
                         const Gap(30),
-                        SizedBox(height: 600, child: _todoUI()),
+                        SizedBox(height: screenHeight * 0.6, child: _todoUI()),
                       ],
                     ),
                   ),
@@ -101,7 +102,7 @@ class _TodoListState extends State<TodoList> {
                     hintText: 'ToDo',
                     enabledBorder: UnderlineInputBorder(
                       borderSide:
-                          BorderSide(color: Colors.grey), // Normal underline
+                          BorderSide(color: Colors.grey), 
                     ),
                   )),
               actions: [
@@ -215,7 +216,6 @@ class _TodoListState extends State<TodoList> {
             );
           }
           return SizedBox(
-            height: 550,
             child: ListView.builder(
               padding: EdgeInsets.zero,
               itemCount: todos.length,

@@ -1,3 +1,4 @@
+import 'package:google_fonts/google_fonts.dart';
 import 'package:new_ela/controllers/user_functions.dart';
 import 'package:new_ela/model/user/user.dart';
 import 'package:new_ela/view/intro.dart';
@@ -49,14 +50,11 @@ class _SplashScreenState extends State<SplashScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
-                  width: 150,
-                  height: 150,
                   child: Image.asset(
-                      'assets/images/9f93ae8f39417cd575e735bf5f1b1505.jpg'),
+                      'assets/images/9f93ae8f39417cd575e735bf5f1b1505.jpg',width: 200,height: 200,),
                 ),
-                const Text(
-                  'ELA',
-                  style: TextStyle(fontSize: 35),
+               Text(
+                  'ELA', style: GoogleFonts.kalnia(fontSize: 40),
                 )
               ],
             ),

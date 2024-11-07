@@ -59,6 +59,7 @@ class _BucketListState extends State<BucketList> {
 
   @override
   Widget build(BuildContext context) {
+  final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -66,7 +67,7 @@ class _BucketListState extends State<BucketList> {
           padding: const EdgeInsets.all(10.0),
           child: Column(
             children: [
-              const Gap(90),
+              SizedBox(height: screenHeight *0.1,),
               Row(
                 children: [
                   IconButton(
@@ -85,7 +86,7 @@ class _BucketListState extends State<BucketList> {
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: CustomContainer(
-                  height: 700,
+                  height: screenHeight * 0.75,
                   color: ElaColors.lightgrey,
                   boxshadow: true,
                   child: Padding(
@@ -135,7 +136,7 @@ class _BucketListState extends State<BucketList> {
                           ],
                         ),
                         const Gap(20),
-                        bucketListUI()
+                        bucketListUI(screenHeight)
                       ],
                     ),
                   ),
@@ -148,7 +149,7 @@ class _BucketListState extends State<BucketList> {
     );
   }
 
-  Widget bucketListUI() {
+  Widget bucketListUI(screenheight) {
     return ValueListenableBuilder<List<BucketModel>>(
         valueListenable: bucketNotifier,
         builder: (context, box, widget) {
@@ -165,62 +166,66 @@ class _BucketListState extends State<BucketList> {
               ],
             );
           }
-          return CustomContainer(
-            color: ElaColors.lightgreen,
-            height: 590,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 10, bottom: 10),
-              child: ListView.builder(
-                itemCount: _filtered.length,
-                itemBuilder: (context, index) {
-                  int reverseIndex = _filtered.length - 1 - index;
-                  final bucketItem = _filtered[reverseIndex];
-                  final int daysLeft = calculateDaysLeft(bucketItem.finalDate!);
-                  return InkWell(
-                    onTap: () {
-                     _navigateToUpdate(context, reverseIndex, bucketItem, true);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CustomContainer(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Row(
-                              children: [
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                                Expanded(
-                                  child: Text(bucketItem.title ?? 'invalid',
-                                      style: ElaTextStyle.title),
-                                ),
-                                IconButton(
-                                    onPressed: () {
-                                     _navigateToUpdate(context, reverseIndex, bucketItem, false);
-                                    },
-                                    icon: const Icon(Icons.edit_outlined)),
-                                IconButton(
-                                    onPressed: () async {
-                                      deleteBucketItem(
-                                          deleteIndex: reverseIndex,
-                                          context: context);
-                                      await loaddata();
-                                    },
-                                    icon: const Icon(Icons.delete_outline))
-                              ],
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 15),
-                              child: Text('Days Left:$daysLeft'),
-                            )
-                          ],
+          return Flexible(
+            child: CustomContainer(
+              color: ElaColors.lightgreen,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                child: ListView.builder(
+                  itemCount: _filtered.length,
+                  itemBuilder: (context, index) {
+                    int reverseIndex = _filtered.length - 1 - index;
+                    final bucketItem = _filtered[reverseIndex];
+                    final int daysLeft = calculateDaysLeft(bucketItem.finalDate!);
+                    return InkWell(
+                      onTap: () {
+                       _navigateToUpdate(context, reverseIndex, bucketItem, true);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CustomContainer(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Row(
+                                children: [
+                                  const SizedBox(
+                                    width: 20,
+                                  ),
+                                  Expanded(
+                                    child: Text(bucketItem.title ?? 'invalid',
+                                        style: ElaTextStyle.title),
+                                  ),
+                                  IconButton(
+                                      onPressed: () {
+                                       _navigateToUpdate(context, reverseIndex, bucketItem, false);
+                                      },
+                                      icon: const Icon(Icons.edit_outlined)),
+                                  IconButton(
+                                      onPressed: () async {
+                                        deleteBucketItem(
+                                            deleteIndex: reverseIndex,
+                                            context: context);
+                                            await loaddata();
+                                        Future.delayed(const Duration(seconds: 1), () async {
+                                          await loaddata();
+                                        });
+                                      },
+                                      icon: const Icon(Icons.delete_outline))
+                                ],
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 15),
+                                child: Text('Days Left:$daysLeft'),
+                              )
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             ),
           );
