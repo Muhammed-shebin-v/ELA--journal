@@ -45,7 +45,7 @@ class CustomDrawer extends StatelessWidget {
               const DrawerItem(text: 'Privacy Policy', screen: PrivacyPolicy()),
               const DrawerItem(text: 'Legal Terms', screen: LegalTerms()),
               const Gap(50),
-              const Text('VERSION - 1.0.2',style: ElaTextStyle.title,),
+              const Text('VERSION - 1.0.4',style: ElaTextStyle.title,),
             ],
           ),
         ),

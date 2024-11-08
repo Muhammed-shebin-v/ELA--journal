@@ -51,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
               children: [
                 SizedBox(
                   child: Image.asset(
-                      'assets/images/9f93ae8f39417cd575e735bf5f1b1505.jpg',width: 200,height: 200,),
+                      'assets/images/ela_icon.JPG',width: 200,height: 200,),
                 ),
                Text(
                   'ELA', style: GoogleFonts.kalnia(fontSize: 40),
