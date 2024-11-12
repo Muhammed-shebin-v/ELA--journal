@@ -73,6 +73,7 @@ class CustomGraph extends StatelessWidget {
                                   markerSettings:
                                       const MarkerSettings(isVisible: true),
                                   name: 'Water Intake',
+                                  color: ElaColors.emojicolor1,
                                 )
                               else if (modelType == 'walk')
                                 LineSeries<WalkModel, String>(
@@ -83,6 +84,7 @@ class CustomGraph extends StatelessWidget {
                                   markerSettings:
                                       const MarkerSettings(isVisible: true),
                                   name: 'Mood Level',
+                                  color: ElaColors.emojicolor1,
                                 )
                               else if (modelType == 'read')
                                 LineSeries<ReadModel, String>(
@@ -93,6 +95,7 @@ class CustomGraph extends StatelessWidget {
                                   markerSettings:
                                       const MarkerSettings(isVisible: true),
                                   name: 'read',
+                                  color: ElaColors.emojicolor1,
                                 )
                               else if (modelType == 'sleep')
                                 LineSeries<SleepModel, String>(
@@ -104,6 +107,7 @@ class CustomGraph extends StatelessWidget {
                                   markerSettings:
                                       const MarkerSettings(isVisible: true),
                                   name: 'read',
+                                  color: ElaColors.emojicolor1,
                                 )
                               else if (modelType == 'mood')
                                 ColumnSeries<MoodModel, String>(
