@@ -53,8 +53,7 @@ class Ela extends StatelessWidget {
   const Ela ({super.key});
   @override
   Widget build(BuildContext context) {
-    return 
-    const MaterialApp(
+    return const MaterialApp(
       title: 'Ela',
       debugShowCheckedModeBanner: false,
       home: SplashScreen()

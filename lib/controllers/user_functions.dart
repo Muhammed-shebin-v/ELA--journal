@@ -49,16 +49,15 @@ Future<Uint8List?> pickSaveImage() async{
     else{
   final ImagePicker _pick=ImagePicker();
   final XFile? imagefile =await _pick.pickImage(source: ImageSource.gallery);
-  log('image picked');
  if(imagefile!=null){
    Uint8List imageBytes=await File(imagefile.path).readAsBytes();
-   log('image converted into bytes');
    return imageBytes;
  }
 }
 }catch(e){
   log('error picking image: $e');
 }
+  return null;
 }
 
 
